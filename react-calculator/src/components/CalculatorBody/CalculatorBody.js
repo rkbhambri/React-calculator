@@ -12,7 +12,7 @@ class CalculatorBody extends Component {
 	handleClick = (event) => {
 		let storedNumber = [...this.state.storedNumber];
 		// regex to check whether selected value is number or not
-		let checkNumber = /^\d+$/;
+		let checkNumber = /^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/;
 		if (event.target.value !== '=') {
 			// Replace with new number when = is pressed and current value is number
 			if (typeof (storedNumber[0]) === 'number' && storedNumber.length === 1 && checkNumber.test(event.target.value)) {
@@ -35,9 +35,11 @@ class CalculatorBody extends Component {
 				if (!checkNumber.test(storedNumber[i])) {
 					if (!checkNumber.test(storedNumber[i + 1])) {
 						isInputCorrect = false;
+						break;
 					}
 				}
 			}
+
 			if (isInputCorrect) {
 				const result = eval(this.state.storedNumber.join(""));
 				storedNumber = [result];
